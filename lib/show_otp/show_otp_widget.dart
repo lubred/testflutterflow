@@ -1,12 +1,18 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/instant_timer.dart';
+import '/actions/actions.dart' as action_blocks;
+import '/custom_code/actions/index.dart' as actions;
+import '/index.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'show_otp_model.dart';
 export 'show_otp_model.dart';
 
@@ -40,6 +46,53 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ShowOtpModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.rtnIsActive = await action_blocks.isLoginActive(context);
+      if (_model.rtnIsActive!) {
+        await Future.wait([
+          Future(() async {
+            _model.refreshToken = InstantTimer.periodic(
+              duration: Duration(milliseconds: 1000),
+              callback: (timer) async {
+                _model.generatedToken = await actions.generateOtp(
+                  widget.pSerialNo!,
+                  widget.pAuthorisationCode!,
+                  '${FFAppState().BankCode}-${FFAppState().SystemSecretKey}',
+                );
+                _model.otp = getJsonField(
+                  _model.generatedToken,
+                  r'''$.otp''',
+                ).toString();
+                _model.timeremaining = getJsonField(
+                  _model.generatedToken,
+                  r'''$.timeremaining''',
+                ).toString();
+                safeSetState(() {});
+              },
+              startImmediately: true,
+            );
+          }),
+          Future(() async {
+            _model.progressBar = InstantTimer.periodic(
+              duration: Duration(milliseconds: 50),
+              callback: (timer) async {
+                if (_model.otp != _model.lastotp) {
+                  _model.iStep = double.parse((_model.timeremaining!));
+                  _model.lastotp = _model.lastotp;
+                }
+                _model.iStep = _model.iStep! + -0.05;
+                safeSetState(() {});
+              },
+              startImmediately: true,
+            );
+          }),
+        ]);
+      } else {
+        context.pushNamed(TokenListWidget.routeName);
+      }
+    });
   }
 
   @override
@@ -51,6 +104,8 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

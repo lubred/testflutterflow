@@ -58,7 +58,7 @@ dependencies:
   intl: 0.20.2
   json_path: 0.7.2
   l_u_b_r_e_d_library_8qq2lx:
-    path: ./dependencies/l_u_b_r_e_d_library_8qq2lx # 0.0.1
+    path: ./dependencies/l_u_b_r_e_d_library_8qq2lx # current
   otp: ^3.1.4
   page_transition: 2.1.0
   path_provider: 2.1.4

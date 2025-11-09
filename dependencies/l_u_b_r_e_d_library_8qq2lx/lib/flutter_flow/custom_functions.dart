@@ -59,3 +59,13 @@ List<String> strSplitText(
   // Trim whitespace from each part (optional but usually helpful)
   return parts.map((part) => part.trim()).toList();
 }
+
+int dtTimestampDifference(
+  DateTime startTime,
+  DateTime endTime,
+) {
+  Duration difference = endTime.difference(startTime);
+  int minutes = difference.inMinutes;
+
+  return minutes;
+}

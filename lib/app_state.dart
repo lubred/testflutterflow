@@ -156,7 +156,7 @@ class FFAppState extends ChangeNotifier {
     secureStorage.delete(key: 'ff_bUseBiometric');
   }
 
-  bool _isLoggedIn = false;
+  bool _isLoggedIn = true;
   bool get isLoggedIn => _isLoggedIn;
   set isLoggedIn(bool value) {
     _isLoggedIn = value;

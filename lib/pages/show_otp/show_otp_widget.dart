@@ -1,3 +1,4 @@
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/instant_timer.dart';
@@ -8,7 +9,6 @@ import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -67,7 +67,7 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                 ).toString();
                 _model.timeremaining = getJsonField(
                   _model.generatedToken,
-                  r'''$.timeremaining''',
+                  r'''$.timeRemaining''',
                 ).toString();
                 safeSetState(() {});
               },
@@ -113,14 +113,28 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).white,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
+          ),
           title: Text(
-            'Page Title',
+            widget.pTokenName!,
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  font: GoogleFonts.interTight(
+                  font: GoogleFonts.outfit(
                     fontWeight:
                         FlutterFlowTheme.of(context).headlineMedium.fontWeight,
                     fontStyle:
@@ -159,7 +173,7 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                           widget.pTokenName!,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
+                                    font: GoogleFonts.manrope(
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontWeight,
@@ -177,6 +191,16 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                                         .bodyMedium
                                         .fontStyle,
                                   ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              15.0, 0.0, 0.0, 0.0),
+                          child: Icon(
+                            Icons.edit_note,
+                            color: FlutterFlowTheme.of(context).warning,
+                            size: 30.0,
+                          ),
                         ),
                       ],
                     ),
@@ -202,8 +226,7 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                                 progressColor: _model.iStep! < 6.0
                                     ? FlutterFlowTheme.of(context).error
                                     : FlutterFlowTheme.of(context).primary,
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).tertiary,
+                                backgroundColor: Color(0xFFE4DFFF),
                                 center: Text(
                                   _model.otp!,
                                   style: FlutterFlowTheme.of(context)
@@ -252,7 +275,7 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              font: GoogleFonts.inter(
+                                              font: GoogleFonts.manrope(
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -312,11 +335,11 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 80.0, 24.0, 40.0),
+                        EdgeInsetsDirectional.fromSTEB(24.0, 50.0, 24.0, 30.0),
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: FlutterFlowTheme.of(context).tertiary,
+                          color: FlutterFlowTheme.of(context).primary,
                         ),
                       ),
                       child: Column(
@@ -325,7 +348,7 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: FlutterFlowTheme.of(context).tertiary,
+                                color: FlutterFlowTheme.of(context).primary,
                               ),
                             ),
                             child: Row(
@@ -425,7 +448,7 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: FlutterFlowTheme.of(context).tertiary,
+                                color: FlutterFlowTheme.of(context).primary,
                               ),
                             ),
                             child: Row(
@@ -630,28 +653,25 @@ class _ShowOtpWidgetState extends State<ShowOtpWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FFButtonWidget(
-                        onPressed: () async {
-                          _model.rtnme =
-                              await FlutterBarcodeScanner.scanBarcode(
-                            '#C62828', // scanning line color
-                            'Cancel', // cancel button text
-                            true, // whether to show the flash icon
-                            ScanMode.QR,
-                          );
-
-                          safeSetState(() {});
+                        onPressed: () {
+                          print('Button pressed ...');
                         },
-                        text: 'Button',
+                        text: 'Delete Token',
+                        icon: FaIcon(
+                          FontAwesomeIcons.trashAlt,
+                          size: 15.0,
+                        ),
                         options: FFButtonOptions(
+                          width: MediaQuery.sizeOf(context).width * 0.5,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
+                              0.0, 0.0, 10.0, 0.0),
+                          color: FlutterFlowTheme.of(context).error,
                           textStyle:
                               FlutterFlowTheme.of(context).titleSmall.override(
-                                    font: GoogleFonts.interTight(
+                                    font: GoogleFonts.manrope(
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .fontWeight,

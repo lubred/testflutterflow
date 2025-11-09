@@ -23,7 +23,6 @@ class ShowOtpModel extends FlutterFlowModel<ShowOtpWidget> {
   // Stores action output result for [Custom Action - generateOtp] action in showOtp widget.
   dynamic generatedToken;
   InstantTimer? progressBar;
-  var rtnme = '';
 
   @override
   void initState(BuildContext context) {}

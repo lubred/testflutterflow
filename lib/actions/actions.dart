@@ -15,6 +15,6 @@ Future<bool?> isLoginActive(BuildContext context) async {
     FFAppState().isLoggedIn = false;
     FFAppState().LastActivityTimestamp = getCurrentTimestamp;
     FFAppState().update(() {});
-    return false;
+    return true;
   }
 }

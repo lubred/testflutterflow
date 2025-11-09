@@ -50,17 +50,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
     debugLogDiagnostics: true,
     refreshListenable: appStateNotifier,
     navigatorKey: appNavigatorKey,
-    errorBuilder: (context, state) => TokenListWidget(),
+    errorBuilder: (context, state) => LoginWidget(),
     routes: [
       FFRoute(
         name: '_initialize',
         path: '/',
-        builder: (context, _) => TokenListWidget(),
+        builder: (context, _) => LoginWidget(),
       ),
       FFRoute(
-        name: HomePageWidget.routeName,
-        path: HomePageWidget.routePath,
-        builder: (context, params) => HomePageWidget(),
+        name: LoginWidget.routeName,
+        path: LoginWidget.routePath,
+        builder: (context, params) => LoginWidget(),
       ),
       FFRoute(
         name: ShowOtpWidget.routeName,
